@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellectra - Stock Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h1 class="splash-title">ELLECTRA</h1>
+            <p class="splash-subtitle">Stock Management System</p>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="mainApp" class="main-app hidden">
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i class="fas fa-bolt brand-icon"></i>
+                    <span class="brand-text">ELLECTRA</span>
+                </div>
+                <button id="sidebarToggle" class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="nav-link active" data-page="dashboard">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="inventory">
+                            <i class="fas fa-boxes-stacked"></i>
+                            <span>Main Inventory</span>
+                        </a>
+                    </li>
+                    <li class="nav-divider"><span>Team Stock</span></li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="girish">
+                            <i class="fas fa-user-gear"></i>
+                            <span>Girish</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="santa">
+                            <i class="fas fa-user-gear"></i>
+                            <span>Santa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="iyappan">
+                            <i class="fas fa-user-gear"></i>
+                            <span>Iyappan</span>
+                        </a>
+                    </li>
+                    <li class="nav-divider"><span>Components</span></li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="components">
+                            <i class="fas fa-microchip"></i>
+                            <span>Component List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="transfer">
+                            <i class="fas fa-right-left"></i>
+                            <span>Transfer Stock</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-page="reports">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sync-status" id="syncStatus">
+                    <i class="fas fa-circle-check"></i>
+                    <span>Synced</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button id="mobileSidebarToggle" class="mobile-sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="pageTitle" class="page-title">Dashboard</h2>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="globalSearch" placeholder="Search components...">
+                    </div>
+                    <button id="refreshBtn" class="icon-btn" title="Refresh Data">
+                        <i class="fas fa-rotate"></i>
+                    </button>
+                    <button id="notifBtn" class="icon-btn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notifBadge">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- PAGE CONTAINER -->
+            <div class="page-container">
+
+                <!-- DASHBOARD PAGE -->
+                <div id="page-dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-boxes-stacked"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalComponents">0</h3>
+                                <p>Total Components</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-cubes"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalStock">0</h3>
+                                <p>Total Stock</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="lowStock">0</h3>
+                                <p>Low Stock Alerts</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>3</h3>
+                                <p>Team Members</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card team-overview">
+                            <div class="card-header">
+                                <h3><i class="fas fa-users"></i> Team Stock Overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="team-bars" id="teamBars">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card low-stock-list">
+                            <div class="card-header">
+                                <h3><i class="fas fa-exclamation-triangle"></i> Low Stock Alerts</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="lowStockList" class="alert-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card recent-activity">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock-rotate-left"></i> Recent Activity</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="activityList" class="activity-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN INVENTORY PAGE -->
+                <div id="page-inventory" class="page">
+                    <div class="page-actions">
+                        <button id="addComponentBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Component
+                        </button>
+                        <button id="importComponentsBtn" class="btn btn-secondary">
+                            <i class="fas fa-file-import"></i> Import from Ellectra DB
+                        </button>
+                        <div class="filter-group">
+                            <select id="categoryFilter">
+                                <option value="all">All Categories</option>
+                                <option value="Resistors">Resistors</option>
+                                <option value="Capacitors">Capacitors</option>
+                                <option value="ICs">ICs</option>
+                                <option value="Connectors">Connectors</option>
+                                <option value="LEDs">LEDs</option>
+                                <option value="Transistors">Transistors</option>
+                                <option value="Diodes">Diodes</option>
+                                <option value="Sensors">Sensors</option>
+                                <option value="Modules">Modules</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Category</th>
+                                    <th>Total Stock</th>
+                                    <th>Girish</th>
+                                    <th>Santa</th>
+                                    <th>Iyappan</th>
+                                    <th>Warehouse</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PERSON PAGES (Girish, Santa, Iyappan) -->
+                <div id="page-girish" class="page person-page" data-person="girish">
+                    <div class="person-header">
+                        <div class="person-avatar girish-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="person-info">
+                            <h2>Girish</h2>
+                            <p>Stock assigned to Girish</p>
+                        </div>
+                        <div class="person-stats">
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="girish-total">0</span>
+                                <span class="mini-stat-label">Total Items</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="girish-components">0</span>
+                                <span class="mini-stat-label">Components</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="girish-table">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="page-santa" class="page person-page" data-person="santa">
+                    <div class="person-header">
+                        <div class="person-avatar santa-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="person-info">
+                            <h2>Santa</h2>
+                            <p>Stock assigned to Santa</p>
+                        </div>
+                        <div class="person-stats">
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="santa-total">0</span>
+                                <span class="mini-stat-label">Total Items</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="santa-components">0</span>
+                                <span class="mini-stat-label">Components</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="santa-table">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="page-iyappan" class="page person-page" data-person="iyappan">
+                    <div class="person-header">
+                        <div class="person-avatar iyappan-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="person-info">
+                            <h2>Iyappan</h2>
+                            <p>Stock assigned to Iyappan</p>
+                        </div>
+                        <div class="person-stats">
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="iyappan-total">0</span>
+                                <span class="mini-stat-label">Total Items</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-stat-value" id="iyappan-components">0</span>
+                                <span class="mini-stat-label">Components</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="iyappan-table">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- COMPONENT LIST PAGE (from Ellectra DB) -->
+                <div id="page-components" class="page">
+                    <div class="page-actions">
+                        <button id="fetchEllectraBtn" class="btn btn-primary">
+                            <i class="fas fa-cloud-arrow-down"></i> Fetch from Ellectra DB
+                        </button>
+                        <button id="addToStockBtn" class="btn btn-secondary">
+                            <i class="fas fa-plus-circle"></i> Add Selected to Stock
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllComponents"></th>
+                                    <th>Component Name</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Available in Stock</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ellectraComponentsTable">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TRANSFER PAGE -->
+                <div id="page-transfer" class="page">
+                    <div class="transfer-container">
+                        <div class="card transfer-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-right-left"></i> Transfer Stock</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="transferForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Component</label>
+                                            <select id="transferComponent" required>
+                                                <option value="">Select Component</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <select id="transferFrom" required>
+                                                <option value="">Select Source</option>
+                                                <option value="warehouse">Warehouse</option>
+                                                <option value="girish">Girish</option>
+                                                <option value="santa">Santa</option>
+                                                <option value="iyappan">Iyappan</option>
+                                            </select>
+                                        </div>
+                                        <div class="transfer-arrow">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <select id="transferTo" required>
+                                                <option value="">Select Destination</option>
+                                                <option value="warehouse">Warehouse</option>
+                                                <option value="girish">Girish</option>
+                                                <option value="santa">Santa</option>
+                                                <option value="iyappan">Iyappan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" id="transferQty" min="1" required placeholder="Enter quantity">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Available: <span id="availableQty" class="highlight-text">0</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group full">
+                                            <label>Notes (Optional)</label>
+                                            <input type="text" id="transferNotes" placeholder="Add notes...">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i class="fas fa-exchange-alt"></i> Transfer Stock
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card transfer-history">
+                            <div class="card-header">
+                                <h3><i class="fas fa-history"></i> Transfer History</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="transferHistory" class="history-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REPORTS PAGE -->
+                <div id="page-reports" class="page">
+                    <div class="reports-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-pie"></i> Stock Distribution</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="distributionChart" class="chart-container">
+                                    <!-- Dynamic chart -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-list-check"></i> Category Summary</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="categorySummary" class="summary-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card full-width">
+                            <div class="card-header">
+                                <h3><i class="fas fa-file-export"></i> Export Data</h3>
+                            </div>
+                            <div class="card-body export-actions">
+                                <button class="btn btn-secondary" id="exportCSV">
+                                    <i class="fas fa-file-csv"></i> Export CSV
+                                </button>
+                                <button class="btn btn-secondary" id="exportJSON">
+                                    <i class="fas fa-file-code"></i> Export JSON
+                                </button>
+                                <button class="btn btn-secondary" id="printReport">
+                                    <i class="fas fa-print"></i> Print Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+
+    <!-- Add/Edit Component Modal -->
+    <div id="componentModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-plus"></i> Add Component</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="componentForm">
+                    <input type="hidden" id="componentId">
+                    <div class="form-group">
+                        <label>Component Name *</label>
+                        <input type="text" id="componentName" required placeholder="e.g., 10K Resistor">
+                    </div>
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="componentCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Resistors">Resistors</option>
+                            <option value="Capacitors">Capacitors</option>
+                            <option value="ICs">ICs</option>
+                            <option value="Connectors">Connectors</option>
+                            <option value="LEDs">LEDs</option>
+                            <option value="Transistors">Transistors</option>
+                            <option value="Diodes">Diodes</option>
+                            <option value="Sensors">Sensors</option>
+                            <option value="Modules">Modules</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="componentDesc" placeholder="Brief description">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Warehouse Stock</label>
+                            <input type="number" id="warehouseQty" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Min Stock Level</label>
+                            <input type="number" id="minStock" min="0" value="5">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Girish</label>
+                            <input type="number" id="girishQty" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Santa</label>
+                            <input type="number" id="santaQty" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Iyappan</label>
+                            <input type="number" id="iyappanQty" min="0" value="0">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-save"></i> Save Component
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
